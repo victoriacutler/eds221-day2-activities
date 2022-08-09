@@ -1,0 +1,85 @@
+---
+title: "Wild Data"
+format: html
+editor: visual
+execute: 
+  messages: false
+  warning: false
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor)
+```
+
+Read in the Data
+
+```{r}
+mack_verts <- read_csv(here::here("data", "AS00601.csv"))
+mack_verts
+```
+
+Wrangling & exploring - lower snake case
+
+```{r}
+mack_verts <- clean_names(mack_verts)
+mack_verts
+```
+
+Wrangling & exploring - practice on individual pieces
+
+```{r}
+
+mc_wt_5 <- mack_verts$weight[5]
+mc_wt_5
+
+mc_length_8_20 <- mack_verts$length1[seq(8,20)]
+mc_length_8_20
+
+mc_dates <- mack_verts$sampledate
+mc_dates
+```
+
+Make a salamander subset
+
+```{r}
+mc_salamanders <- mack_verts %>% dplyr::filter(species == "DITE")
+```
+
+Make a scatterplot of salamander length x weight
+
+```{r}
+salamander_size <- ggplot(data = mc_salamanders, aes(x = length1, y = weight)) +
+  geom_point(aes(color = weight), 
+             size = .5,
+             opacity = .5) +
+  theme_classic() +
+  labs(x = "snout-vent length in millimeters",
+       y = "weight (grams)",
+       title = "weight (grams) vs. snout-vent length in millimeters",
+       subtitle = "by: Victoria Cutler",
+       caption = "Figure X")
+salamander_size
+
+ggsave(here::here("figs","salamander_size.png"))
+                        
+```
+
+Make a cutthroat plot
+
+```{r}
+mc_trout <- mack_verts %>% dplyr::filter(species == "ONCL")
+mc_trout
+
+cutthroat_size <- ggplot(data = mc_trout, aes(x = length1, y = weight)) +
+  geom_point(aes(color = reach)) +
+  scale_color_manual(values = c("green","purple","pink")) +
+  facet_wrap(~reach) +
+  labs(title = "bleh",
+       x = "length",
+       y = "height")
+cutthroat_size
+
+ggsave(here::here("figs","cutthroat_size.png"))
+```

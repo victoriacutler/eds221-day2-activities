@@ -1,0 +1,42 @@
+---
+title: "R Data Types"
+format: html
+editor: visual
+---
+
+## Create some data, check the classes, index!
+
+#1
+
+```{r}
+vec_1 <- c(2, 5, 9, 10, 8, 12, 1, 8)
+class(vec_1)
+typeof(vec_1)
+vec_1_e3 <- vec_1[3]
+vec_1_e1 <- vec_1[1]
+
+seq5to7 = seq(5,7)
+vec_1_e5to7 <- vec_1[seq5to7]
+
+vec_1_char <- as.character(vec_1)
+```
+
+#2
+
+```{r}
+vec_2 <- c(town = "Santa Barbara", location = "Rincon", swell = "south")
+vec_2
+class(vec_2)
+length(vec_2)
+vec_2_e2 <- vec_2["location"]
+vec_2_e2
+
+df_1 <- data.frame(region = c("A", "B", "A", "D"), species = c("otter", "great white", "sea lion", "gray whale"), count = c(12, 2, 36, 6))
+df_1
+class(df_1)
+class(df_1$species)
+max_count = max(df_1$count)
+max_count
+```
+
+### Part 2. Wild Data
